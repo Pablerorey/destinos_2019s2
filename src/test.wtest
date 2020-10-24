@@ -1,0 +1,52 @@
+import viajes.*
+import socios.*
+
+describe "Test mutual" {
+
+	const ciudadNormal = new ExcursionACiudad(atracciones = 4)
+	const ciudadTropical = new ExcursionesACiudadTropical(atracciones = 4, sirveParaBronceado = true)
+	const trekking = new SalidaDeTrekking(kmtsDeSendero = 100, diasDeSol = 130)
+	
+	test "ciudadNormal"{
+		assert.equals(2, ciudadNormal.diasDeActividad())
+		assert.notThat(ciudadNormal.implicaEsfuerzo())
+		assert.notThat(ciudadNormal.sirveParaBronceado())
+	}
+	
+	test "ciudadTorpical"{
+		assert.equals(3, ciudadTropical.diasDeActividad())
+		assert.notThat(ciudadTropical.implicaEsfuerzo())
+		assert.that(ciudadTropical.sirveParaBronceado())
+	}
+	
+	test "ciudad 8 Atracciones"{
+		ciudadNormal.atracciones(8)
+		assert.equals(4, ciudadNormal.diasDeActividad())
+		assert.that(ciudadNormal.implicaEsfuerzo())
+		assert.notThat(ciudadNormal.sirveParaBronceado())
+	}
+	
+	test "tropical 8 Atracciones"{
+		ciudadTropical.atracciones(8)
+		assert.equals(5, ciudadTropical.diasDeActividad())
+		assert.that(ciudadTropical.implicaEsfuerzo())
+		assert.that(ciudadTropical.sirveParaBronceado())
+	}
+	
+	test "test trekking"{
+		assert.equals(2, trekking.diasDeActividad())
+		assert.that(trekking.implicaEsfuerzo())
+		assert.notThat(trekking.sirveParaBronceado())
+		trekking.kmtsDeSendero(50)
+		trekking.diasDeSol(240)
+		assert.equals(1, trekking.diasDeActividad())
+		assert.notThat(trekking.implicaEsfuerzo())
+		assert.that(trekking.sirveParaBronceado())
+		trekking.kmtsDeSendero(250)
+		trekking.diasDeSol(130)
+		assert.equals(5, trekking.diasDeActividad())
+		assert.that(trekking.implicaEsfuerzo())
+		assert.that(trekking.sirveParaBronceado())
+	}
+
+}
